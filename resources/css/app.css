@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .btn-primary {
+        @apply inline-flex items-center justify-center rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-soft transition hover:bg-[#01446e];
+    }
+
+    .btn-success {
+        @apply inline-flex items-center justify-center rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-soft transition hover:bg-[#328800];
+    }
+
+    .btn-danger {
+        @apply inline-flex items-center justify-center rounded-xl bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700;
+    }
+
+    .card {
+        @apply rounded-2xl border border-slate-100 bg-white p-6 shadow-soft;
+    }
+
+    .form-input {
+        @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10;
+    }
+
+    .form-label {
+        @apply mb-2 block text-sm font-semibold text-primary;
+    }
+
+    .table-head {
+        @apply bg-primary text-white;
+    }
+
+    .badge-success {
+        @apply rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700;
+    }
+
+    .badge-warning {
+        @apply rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold text-yellow-700;
+    }
+
+    .badge-danger {
+        @apply rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700;
+    }
+
+    .badge-primary {
+        @apply rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-primary;
+    }
+
+@layer components {
+    .admin-menu {
+        @apply flex items-center rounded-2xl px-5 py-3 text-sm font-semibold text-white/80 transition hover:bg-white/10 hover:text-white;
+    }
+
+    .admin-card {
+        @apply rounded-3xl border border-white/70 bg-white/80 backdrop-blur-xl shadow-soft;
+    }
+
+    .admin-title {
+        @apply text-3xl font-bold text-slate-800;
+    }
+
+    .admin-subtitle {
+        @apply text-slate-500 mt-2;
+    }
+
+    .admin-table-head {
+        @apply px-5 py-4 text-left text-sm font-bold text-slate-500;
+    }
+
+    .admin-table-body {
+        @apply px-5 py-4 text-sm text-slate-700;
+    }
+
+    .admin-input {
+        @apply w-full rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm outline-none transition focus:border-[#01588E] focus:ring-4 focus:ring-[#01588E]/10;
+    }
+
+    .admin-label {
+        @apply block text-sm font-semibold text-slate-700 mb-2;
+    }
+
+    .admin-btn-primary {
+        @apply inline-flex items-center justify-center rounded-2xl bg-[#01588E] px-5 py-3 text-sm font-bold text-white shadow-soft transition hover:bg-[#01446e];
+    }
+
+    .admin-btn-green {
+        @apply inline-flex items-center justify-center rounded-2xl bg-[#41AD01] px-5 py-3 text-sm font-bold text-white shadow-soft transition hover:bg-[#358d01];
+    }
+
+    .admin-btn-light {
+        @apply inline-flex items-center justify-center rounded-2xl bg-slate-100 px-5 py-3 text-sm font-bold text-slate-700 transition hover:bg-slate-200;
+    }
+
+    .admin-btn-sm {
+        @apply inline-flex items-center justify-center rounded-xl bg-[#01588E] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#01446e];
+    }
+
+    .admin-badge-success {
+        @apply inline-flex rounded-full bg-[#41AD01]/10 px-3 py-1 text-xs font-bold text-[#41AD01];
+    }
+
+    .admin-badge-warning {
+        @apply inline-flex rounded-full bg-yellow-100 px-3 py-1 text-xs font-bold text-yellow-700;
+    }
+
+    .admin-badge-danger {
+        @apply inline-flex rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-700;
+    }
+}
+
+@layer components {
+    .sidebar-menu {
+        @apply mb-2 block rounded-xl px-4 py-3 text-sm font-medium text-white/90 transition hover:bg-white/10 hover:text-white;
+    }
+
+    .card-glass {
+        @apply rounded-3xl border border-white/70 bg-white/80 backdrop-blur-xl shadow-soft;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center justify-center rounded-2xl bg-[#01588E] px-5 py-3 text-sm font-bold text-white shadow-soft transition hover:bg-[#01446e];
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition hover:bg-slate-50;
+    }
+
+    .input-style {
+        @apply w-full rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm outline-none transition focus:border-[#01588E] focus:ring-4 focus:ring-[#01588E]/10;
+    }
+
+    .label-style {
+        @apply mb-2 block text-sm font-bold text-slate-700;
+    }
+
+    .badge-success {
+        @apply inline-flex rounded-full bg-[#41AD01]/10 px-3 py-1 text-xs font-bold text-[#41AD01];
+    }
+
+    .section-title {
+        @apply text-xl font-bold text-slate-800;
+    }
+
+    .table-head {
+        @apply px-5 py-4 text-left text-sm font-bold text-slate-500;
+    }
+
+    .table-body {
+        @apply px-5 py-4 text-sm text-slate-700;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background:
+        radial-gradient(circle at top left, rgba(1,88,142,0.08), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(65,173,1,0.08), transparent 30%);
+}
+
+}
