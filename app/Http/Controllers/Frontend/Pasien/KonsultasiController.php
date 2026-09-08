@@ -57,6 +57,7 @@ class KonsultasiController extends Controller
                     'kecemasan',
                     'cemas',
                     'anxiety',
+                    'anxious',
                     'panic',
                     'panic attack',
                     'panik',
@@ -67,7 +68,7 @@ class KonsultasiController extends Controller
             ],
             [
                 'nama' => 'Depresi',
-                'deskripsi' => 'Bantuan awal untuk perasaan sedih berkepanjangan dan kehilangan motivasi.',
+                'deskripsi' => 'Bantuan awal untuk perasaan sedih berkepanjangan and kehilangan motivasi.',
                 'keyword' => 'depresi',
                 'icon' => 'fa-solid fa-cloud-rain',
                 'synonyms' => ['depresi', 'depression', 'sedih', 'kehilangan motivasi'],
@@ -86,6 +87,7 @@ class KonsultasiController extends Controller
                     'relasi',
                     'pasangan',
                     'pertemanan',
+                    'marriage',
                 ],
             ],
             [
@@ -108,6 +110,8 @@ class KonsultasiController extends Controller
                     'suasana hati',
                     'emosi tidak stabil',
                     'bipolar',
+                    'mood disorder',
+                    'emotional support'
                 ],
             ],
             [
@@ -149,6 +153,15 @@ class KonsultasiController extends Controller
                         $q->orWhere('spesialisasi', 'LIKE', '%' . $keyword . '%')
                             ->orWhere('spesialisasi', 'LIKE', '%' . $keywordSpace . '%')
                             ->orWhere('spesialisasi', 'LIKE', '%' . $keywordUnderscore . '%');
+
+                        // Jembatan Fleksibilitas Tambahan: Jika kata kunci mengandung spasi (misal: "mood disorder"), cari kata pecahan terakhirnya ("disorder" / "mood")
+                        if (str_contains($keywordSpace, ' ')) {
+                            foreach (explode(' ', $keywordSpace) as $subKeyword) {
+                                if (strlen($subKeyword) > 3) { // Hanya pecah kata yang panjangnya di atas 3 karakter agar akurat
+                                    $q->orWhere('spesialisasi', 'LIKE', '%' . $subKeyword . '%');
+                                }
+                            }
+                        }
 
                         if (Schema::hasColumn('psikologs', 'bio')) {
                             $q->orWhere('bio', 'LIKE', '%' . $keyword . '%')
@@ -459,7 +472,7 @@ class KonsultasiController extends Controller
         $now = Carbon::now('Asia/Jakarta');
 
         return $now->lt($now->copy()->setTime(6, 0, 0))
-            || $now->gte($now->copy()->setTime(20, 0, 0));
+            || $now->gte($now->copy()->setTime(22, 0, 0));
     }
 
     private function authorizeAccess(Konsultasi $konsultasi): void

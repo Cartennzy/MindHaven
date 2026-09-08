@@ -45,7 +45,7 @@
         'depresi' => 'depresi, depression, sedih, kehilangan motivasi',
         'keluarga_hubungan' => 'keluarga_hubungan, keluarga hubungan, keluarga, hubungan, relationship, relasi, pasangan, pertemanan',
         'trauma' => 'trauma, traumatis, ptsd, luka emosional',
-        'gangguan_mood' => 'gangguan_mood, gangguan mood, mood, mood swing, suasana hati, emosi tidak stabil, bipolar',
+        'gangguan_mood' => 'gangguan_mood, gangguan mood, mood, mood swing, suasana hati, emosi tidak stabil, bipolar, mood disorder',
         'lainnya' => 'lainnya, umum, general, konseling umum',
     ];
 @endphp
@@ -271,9 +271,9 @@
                                 </div>
 
                                 <div class="mt-4 flex items-center justify-between gap-3">
-                                    <p class="text-lg font-black text-[#01588E]">
+                                    <div class="text-lg font-black text-[#01588E]">
                                         Rp {{ number_format($psikolog->biaya_konsultasi, 0, ',', '.') }}
-                                    </p>
+                                    </div>
 
                                     <span class="rounded-2xl bg-[#41AD01] px-5 py-3 text-sm font-black text-white">
                                         Pilih
@@ -556,8 +556,9 @@
                 const specialization = normalizeText(card.dataset.specialization || '');
                 const isOther = normalizedKeyword === 'lainnya';
 
+                // Peningkatan akurasi pencocokan kata kunci agar sinkron dengan database admin
                 const isMatch = keywordList.some(function (item) {
-                    return specialization.includes(item);
+                    return specialization.includes(item) || item.includes(specialization);
                 });
 
                 if (isOther || isMatch) {

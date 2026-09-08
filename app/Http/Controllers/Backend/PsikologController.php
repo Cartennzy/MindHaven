@@ -415,15 +415,19 @@ class PsikologController extends Controller
             }
         });
 
-        return redirect()
-            ->route(
-                'admin.psikolog.show',
-                $psikolog->id_psikolog
-            )
-            ->with(
-                'success',
-                'Status psikolog berhasil diperbarui dan email login berhasil dikirim.'
-            );
+        if ($request->status_verifikasi === 'verified') {
+            return redirect()
+                ->route('admin.psikolog.show', $psikolog->id_psikolog)
+                ->with('success', 'Status psikolog berhasil diperbarui dan email login berhasil dikirim.');
+        } elseif ($request->status_verifikasi === 'rejected') {
+            return redirect()
+                ->route('admin.psikolog.show', $psikolog->id_psikolog)
+                ->with('error', 'Status pendaftaran psikolog telah ditolak.');
+        } else {
+            return redirect()
+                ->route('admin.psikolog.show', $psikolog->id_psikolog)
+                ->with('info', 'Status verifikasi psikolog diubah kembali menjadi Pending.');
+        }
     }
 
     public function destroy(Psikolog $psikolog)

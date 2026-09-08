@@ -182,7 +182,7 @@
         .mh-hero-bg {
             min-height: auto;
             background-image:
-                linear-gradient(90deg, rgba(244,251,255,.96), rgba(244,251,255,.84)),
+                linear-gradient(90deg, rgba(244, 251, 255,.96), rgba(244, 251, 255,.84)),
                 url('{{ asset('assets/images/landing-section.png') }}');
             background-position: center top;
         }
@@ -195,7 +195,7 @@
 
         .mh-hero-bg {
             background-image:
-                linear-gradient(180deg, rgba(244,251,255,.97), rgba(244,251,255,.90)),
+                linear-gradient(180deg, rgba(244, 251, 255,.97), rgba(244, 251, 255,.90)),
                 url('{{ asset('assets/images/landing-section.png') }}');
             background-position: center top;
         }
@@ -226,6 +226,7 @@
                     <a href="#layanan" class="mh-nav-link rounded-xl px-4 py-2.5 text-sm font-medium text-white/90 hover:bg-white/12">Services</a>
                     <a href="#fitur" class="mh-nav-link rounded-xl px-4 py-2.5 text-sm font-medium text-white/90 hover:bg-white/12">Fitur</a>
                     <a href="#psikolog" class="mh-nav-link rounded-xl px-4 py-2.5 text-sm font-medium text-white/90 hover:bg-white/12">Psikolog</a>
+                    <a href="#testimoni" class="mh-nav-link rounded-xl px-4 py-2.5 text-sm font-medium text-white/90 hover:bg-white/12">Testimoni</a>
                     <a href="#mitra" class="mh-nav-link rounded-xl px-4 py-2.5 text-sm font-medium text-white/90 hover:bg-white/12">Mitra</a>
                     <a href="#artikel" class="mh-nav-link rounded-xl px-4 py-2.5 text-sm font-medium text-white/90 hover:bg-white/12">Artikel</a>
                 </nav>
@@ -248,6 +249,7 @@
                     <a href="#layanan" class="rounded-xl px-4 py-3 text-sm font-medium text-white hover:bg-white/15">Services</a>
                     <a href="#fitur" class="rounded-xl px-4 py-3 text-sm font-medium text-white hover:bg-white/15">Features</a>
                     <a href="#psikolog" class="rounded-xl px-4 py-3 text-sm font-medium text-white hover:bg-white/15">Psikolog</a>
+                    <a href="#testimoni" class="rounded-xl px-4 py-3 text-sm font-medium text-white hover:bg-white/15">Testimoni</a>
                     <a href="#mitra" class="rounded-xl px-4 py-3 text-sm font-medium text-white hover:bg-white/15">Mitra</a>
                     <a href="#artikel" class="rounded-xl px-4 py-3 text-sm font-medium text-white hover:bg-white/15">Blog</a>
 
@@ -354,7 +356,7 @@
 
         <div class="relative mh-container grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
             <div class="mh-reveal-left lg:col-span-5">
-                <p class="text-sm font-bold uppercase tracking-[0.28em] text-white/80">World-Class Mental Care</p>
+                <p class="text-sm font-bold uppercase tracking-[0.25em] text-white/80">World-Class Mental Care</p>
                 <h2 class="mt-5 max-w-xl text-4xl font-bold leading-tight tracking-[-0.04em] md:text-5xl">Sistem konsultasi mental yang rapi.</h2>
                 <p class="mt-6 max-w-lg text-base font-medium leading-8 text-white/88">MindHaven menyatukan konsultasi pasien, hasil psikolog, pembayaran, dan rujukan lanjutan dalam satu alur yang mudah dipahami.</p>
 
@@ -478,269 +480,376 @@
         </div>
     </section>
 
-   {{-- PSIKOLOG PROFESIONAL --}}
-<section id="psikolog" class="bg-white px-4 py-20">
-    <div class="mh-container">
-        <div class="mh-reveal mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
-            <div>
-                <p class="text-sm font-bold uppercase tracking-[0.25em] text-[#159AC8]">Professional Psychologist</p>
-                <h2 class="mt-3 text-3xl font-bold tracking-tight text-[#172033] md:text-4xl">Psikolog Profesional</h2>
-                <p class="mt-3 max-w-xl text-sm leading-8 text-[#6B7D87]">Profil psikolog ditampilkan dari data psikolog terdaftar pada sistem MindHaven.</p>
-            </div>
-
-            <a href="{{ route('register') }}" class="mh-btn inline-flex rounded-full bg-[#28AEDA] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_38px_rgba(82,162,186,.25)] hover:bg-[#149DCC]">
-                Mulai Konsultasi
-            </a>
-        </div>
-
-        @if(isset($psikologs) && $psikologs->count() > 0)
-            <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-                @foreach($psikologs->take(3) as $psikolog)
-                    <div class="mh-reveal mh-hover mh-pro-card rounded-3xl p-5">
-                        <div class="h-64 overflow-hidden rounded-[1.5rem] bg-[#EAF8FD]">
-                            @if(isset($psikolog->foto_profil) && $psikolog->foto_profil)
-                                <img src="{{ asset('storage/' . $psikolog->foto_profil) }}" alt="{{ $psikolog->nama_lengkap }}" class="h-full w-full object-cover object-top transition duration-500 hover:scale-105">
-                            @else
-                                <img src="{{ asset('assets/images/psikolog-hero.png') }}" alt="Psikolog MindHaven" class="h-full w-full object-cover object-top transition duration-500 hover:scale-105">
-                            @endif
-                        </div>
-
-                        <div class="mt-5">
-                            <h3 class="text-lg font-bold text-[#172033]">{{ $psikolog->nama_lengkap ?? 'Psikolog MindHaven' }}</h3>
-                            <p class="mt-1 text-sm font-semibold text-[#159AC8]">{{ $psikolog->spesialisasi ?? 'Psikolog Profesional' }}</p>
-                            <p class="mt-3 line-clamp-3 text-sm leading-7 text-[#6B7D87]">{{ $psikolog->bio ?? 'Siap membantu pasien melalui konsultasi yang aman, terarah, dan profesional.' }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        @else
-            <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-                @for($i = 1; $i <= 3; $i++)
-                    <div class="mh-reveal mh-hover mh-pro-card rounded-3xl p-5">
-                        <div class="h-64 overflow-hidden rounded-[1.5rem] bg-[#EAF8FD]">
-                            <img src="{{ asset('assets/images/psikolog-hero.png') }}" alt="Psikolog MindHaven" class="h-full w-full object-cover object-top">
-                        </div>
-
-                        <h3 class="mt-5 text-lg font-bold text-[#172033]">Psikolog Profesional</h3>
-                        <p class="mt-1 text-sm font-semibold text-[#159AC8]">MindHaven Partner</p>
-                        <p class="mt-3 text-sm leading-7 text-[#6B7D87]">Data psikolog akan tampil otomatis ketika controller mengirim variabel psikolog ke halaman home.</p>
-                    </div>
-                @endfor
-            </div>
-        @endif
-    </div>
-</section>
-
-{{-- PARTNERSHIP CTA MITRA --}}
-<section id="mitra" class="relative overflow-hidden bg-[#EEF9FF] px-4 py-20">
-    <div class="absolute inset-0 mh-line-pattern opacity-70"></div>
-
-    <div class="relative mh-container">
-        <div class="overflow-hidden rounded-[2.4rem] bg-white shadow-[0_28px_80px_rgba(14,116,144,.14)]">
-            <div class="grid grid-cols-1 lg:grid-cols-2">
-                <div class="mh-reveal-left p-8 md:p-12">
-                    <p class="text-sm font-bold uppercase tracking-[0.25em] text-[#159AC8]">Partnership Program</p>
-                    <h2 class="mt-4 text-3xl font-bold leading-tight tracking-tight text-[#172033] md:text-5xl">Bergabung sebagai mitra psikolog.</h2>
-                    <p class="mt-5 max-w-xl text-sm leading-8 text-[#6B7D87] md:text-base">
-                        Psikolog profesional dapat mengajukan kerja sama secara online. Setelah diverifikasi, akun dapat digunakan untuk mengelola layanan konsultasi pasien.
-                    </p>
-
-                    <div class="mt-8 flex flex-wrap gap-4">
-                        <a href="{{ route('psikolog.register') }}" class="mh-btn mh-shine inline-flex items-center justify-center rounded-full bg-[#28AEDA] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_38px_rgba(82,162,186,.30)] hover:bg-[#149DCC]">
-                            Ajukan Mitra
-                        </a>
-
-                        <a href="{{ route('backend.login') }}" class="mh-btn inline-flex items-center justify-center rounded-full bg-[#EEF9FF] px-6 py-3 text-sm font-semibold text-[#159AC8] hover:bg-[#F7FCFE]">
-                            Masuk 
-                        </a>
-                    </div>
+    {{-- PSIKOLOG PROFESIONAL --}}
+    <section id="psikolog" class="bg-white px-4 py-20">
+        <div class="mh-container">
+            <div class="mh-reveal mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+                <div>
+                    <p class="text-sm font-bold uppercase tracking-[0.25em] text-[#159AC8]">Professional Psychologist</p>
+                    <h2 class="mt-3 text-3xl font-bold tracking-tight text-[#172033] md:text-4xl">Psikolog Profesional</h2>
+                    <p class="mt-3 max-w-xl text-sm leading-8 text-[#6B7D87]">Profil psikolog ditampilkan dari data psikolog terdaftar pada sistem MindHaven.</p>
                 </div>
 
-                <div class="mh-reveal-right bg-gradient-to-br from-[#28AEDA] to-[#0477A7] p-8 text-white md:p-12">
-                    <p class="text-sm font-bold uppercase tracking-[0.22em] text-white/72">Benefit Mitra</p>
-                    <h3 class="mt-3 text-2xl font-bold">Fitur untuk psikolog</h3>
+                <a href="{{ route('register') }}" class="mh-btn inline-flex rounded-full bg-[#28AEDA] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_38px_rgba(82,162,186,.25)] hover:bg-[#149DCC]">
+                    Mulai Konsultasi
+                </a>
+            </div>
 
-                    <div class="mt-7 grid gap-4 sm:grid-cols-2">
-                        <div class="rounded-3xl bg-white/13 p-5 ring-1 ring-white/15 backdrop-blur-md">
-                            <h4 class="font-bold">Kelola Sesi</h4>
-                            <p class="mt-2 text-sm leading-7 text-white/78">Pantau konsultasi pasien dalam tampilan yang rapi.</p>
+            @if(isset($psikologs) && $psikologs->count() > 0)
+                <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+                    @foreach($psikologs->take(3) as $psikolog)
+                        <div class="mh-reveal mh-hover mh-pro-card rounded-3xl p-5">
+                            <div class="h-64 overflow-hidden rounded-[1.5rem] bg-[#EAF8FD]">
+                                @if(isset($psikolog->foto_profil) && $psikolog->foto_profil)
+                                    <img src="{{ asset('storage/' . $psikolog->foto_profil) }}" alt="{{ $psikolog->nama_lengkap }}" class="h-full w-full object-cover object-top transition duration-500 hover:scale-105">
+                                @else
+                                    <img src="{{ asset('assets/images/psikolog-hero.png') }}" alt="Psikolog MindHaven" class="h-full w-full object-cover object-top transition duration-500 hover:scale-105">
+                                @endif
+                            </div>
+
+                            <div class="mt-5">
+                                <h3 class="text-lg font-bold text-[#172033]">{{ $psikolog->nama_lengkap ?? 'Psikolog MindHaven' }}</h3>
+                                <p class="mt-1 text-sm font-semibold text-[#159AC8]">{{ $psikolog->spesialisasi ?? 'Psikolog Profesional' }}</p>
+                                <p class="mt-3 line-clamp-3 text-sm leading-7 text-[#6B7D87]">{{ $psikolog->bio ?? 'Siap membantu pasien melalui konsultasi yang aman, terarah, dan profesional.' }}</p>
+                            </div>
                         </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+                    @for($i = 1; $i <= 3; $i++)
+                        <div class="mh-reveal mh-hover mh-pro-card rounded-3xl p-5">
+                            <div class="h-64 overflow-hidden rounded-[1.5rem] bg-[#EAF8FD]">
+                                <img src="{{ asset('assets/images/psikolog-hero.png') }}" alt="Psikolog MindHaven" class="h-full w-full object-cover object-top">
+                            </div>
 
-                        <div class="rounded-3xl bg-white/13 p-5 ring-1 ring-white/15 backdrop-blur-md">
-                            <h4 class="font-bold">Input Hasil</h4>
-                            <p class="mt-2 text-sm leading-7 text-white/78">Catatan konsultasi tersimpan secara terstruktur.</p>
+                            <h3 class="mt-5 text-lg font-bold text-[#172033]">Psikolog Profesional</h3>
+                            <p class="mt-1 text-sm font-semibold text-[#159AC8]">MindHaven Partner</p>
+                            <p class="mt-3 text-sm leading-7 text-[#6B7D87]">Data psikolog akan tampil otomatis ketika controller mengirim variabel psikolog ke halaman home.</p>
                         </div>
+                    @endfor
+                </div>
+            @endif
+        </div>
+    </section>
 
-                        <div class="rounded-3xl bg-white/13 p-5 ring-1 ring-white/15 backdrop-blur-md">
-                            <h4 class="font-bold">Buat Rujukan</h4>
-                            <p class="mt-2 text-sm leading-7 text-white/78">Rujukan psikiater dapat dibuat saat pasien butuh tindak lanjut.</p>
+    {{-- TESTIMONI (APA KATA MEREKA) --}}
+    <section id="testimoni" class="bg-[#F8FDFF] border-t border-b border-[#E3F5FC] px-4 py-20">
+        <div class="mh-container">
+            <div class="mh-reveal mx-auto max-w-2xl text-center mb-12">
+                <p class="text-sm font-bold uppercase tracking-[0.25em] text-[#159AC8]">Testimonials</p>
+                <h2 class="mt-3 text-3xl font-bold tracking-tight text-[#172033] md:text-4xl">Apa Kata Mereka</h2>
+                <p class="mx-auto mt-4 max-w-xl text-sm leading-8 text-[#6B7D87] md:text-base">Cerita nyata dari mereka yang telah menemukan ketenangan dan arah baru bersama MindHaven.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+                @if(isset($testimonialsData) && count($testimonialsData) > 0)
+                    {{-- RENDERING REALTIME DATABASE TESTIMONIALS --}}
+                    @foreach($testimonialsData as $testi)
+                        <div class="mh-reveal mh-hover mh-soft-card rounded-[2rem] p-7 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center gap-1 text-amber-400 mb-4">
+                                    @for($i = 1; $i <= ($testi->bintang ?? 5); $i++)
+                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="#fbbf24">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                        </svg>
+                                    @endfor
+                                </div>
+                                <p class="text-sm leading-7 text-[#4F6675] font-medium italic">"{{ $testi->ulasan }}"</p>
+                            </div>
+                            <div class="mt-6 flex items-center gap-3.5 pt-5 border-t border-[#E6F4F8]">
+                                <div class="h-11 w-11 shrink-0 rounded-full bg-[#D5F1FC] flex items-center justify-center font-bold text-[#159AC8]">
+                                    {{ strtoupper(substr($testi->nama ?? 'P', 0, 1)) }}
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-[#172033]">{{ $testi->nama ?? 'Anonim' }}</h4>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="rounded-3xl bg-white/13 p-5 ring-1 ring-white/15 backdrop-blur-md">
-                            <h4 class="font-bold">Profil Tampil</h4>
-                            <p class="mt-2 text-sm leading-7 text-white/78">Profil psikolog aktif dapat ditampilkan pada sistem.</p>
+                    @endforeach
+                @else
+                    {{-- FALLBACK DATA DUMMY JIKA TABEL DATABASE KOSONG --}}
+                    <div class="mh-reveal mh-hover mh-soft-card rounded-[2rem] p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-1 text-amber-400 mb-4">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="#fbbf24">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                    </svg>
+                                @endfor
+                            </div>
+                            <p class="text-sm leading-7 text-[#4F6675] font-medium italic">"Alur aplikasinya sangat rapi. Saya bisa memilih psikolog yang sesuai dengan kebutuhan saya, dan hasil konsultasi serta catatan penanganannya tersimpan dengan sangat terstruktur. Sangat membantu!"</p>
+                        </div>
+                        <div class="mt-6 flex items-center gap-3.5 pt-5 border-t border-[#E6F4F8]">
+                            <div class="h-11 w-11 shrink-0 rounded-full bg-[#D5F1FC] flex items-center justify-center font-bold text-[#159AC8]">R</div>
+                            <div>
+                                <h4 class="text-sm font-bold text-[#172033]">Rian Amanda</h4>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-{{-- ARTICLE --}}
-<section id="artikel" class="bg-white px-4 py-20">
-    <div class="mh-container">
-        <div class="mh-reveal mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
-            <div>
-                <p class="text-sm font-bold uppercase tracking-[0.25em] text-[#159AC8]">Education Content</p>
-                <h2 class="mt-3 text-3xl font-bold tracking-tight text-[#172033] md:text-4xl">Artikel Kesehatan MindHaven</h2>
+                    <div class="mh-reveal mh-hover mh-soft-card rounded-[2rem] p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-1 text-amber-400 mb-4">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="#fbbf24">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                    </svg>
+                                @endfor
+                            </div>
+                            <p class="text-sm leading-7 text-[#4F6675] font-medium italic">"Sebagai seseorang yang sibuk, fitur meditasi digital dan sistem penjadwalan otomatis di MindHaven membuat terapi kesehatan mental terasa jauh lebih rileks, fleksibel, dan tidak melelahkan."</p>
+                        </div>
+                        <div class="mt-6 flex items-center gap-3.5 pt-5 border-t border-[#E6F4F8]">
+                            <div class="h-11 w-11 shrink-0 rounded-full bg-[#D5F1FC] flex items-center justify-center font-bold text-[#159AC8]">S</div>
+                            <div>
+                                <h4 class="text-sm font-bold text-[#172033]">Siti Sarah</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mh-reveal mh-hover mh-soft-card rounded-[2rem] p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-1 text-amber-400 mb-4">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="#fbbf24">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                    </svg>
+                                @endfor
+                            </div>
+                            <p class="text-sm leading-7 text-[#4F6675] font-medium italic">"Fitur rujukan psikiater terintegrasi dengan sangat baik saat saya butuh penanganan medis lanjutan. Transparansi data rekam medis di platform digital ini benar-benar luar biasa."</p>
+                        </div>
+                        <div class="mt-6 flex items-center gap-3.5 pt-5 border-t border-[#E6F4F8]">
+                            <div class="h-11 w-11 shrink-0 rounded-full bg-[#D5F1FC] flex items-center justify-center font-bold text-[#159AC8]">D</div>
+                            <div>
+                                <h4 class="text-sm font-bold text-[#172033]">Dimas Pratama</h4>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
 
-            <div class="max-w-xl md:text-right">
-                <p class="text-sm leading-7 text-[#6B7D87]">Konten edukasi kesehatan mental untuk membantu pengguna memahami kondisi mental dengan lebih baik.</p>
-                <a href="{{ route('artikel.index') }}" class="mh-btn mt-4 inline-flex rounded-full bg-[#28AEDA] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_38px_rgba(82,162,186,.25)] hover:bg-[#149DCC]">
-                    Lihat Artikel
+            <div class="mt-12 text-center mh-reveal">
+                <a href="{{ route('register') }}" class="mh-btn mh-shine inline-flex items-center gap-3 rounded-full bg-[#28AEDA] px-7 py-3.5 text-sm font-bold text-white shadow-[0_18px_38px_rgba(82,162,186,.26)] hover:bg-[#149DCC]">
+                    Tulis Ceritamu Sendiri
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                    </svg>
                 </a>
             </div>
         </div>
+    </section>
 
-        @if(isset($artikels) && $artikels->count() > 0)
-            <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-                @foreach($artikels as $artikel)
-                    <a href="{{ route('artikel.show', ['artikel' => $artikel->id_artikel]) }}" class="mh-reveal mh-hover group overflow-hidden rounded-3xl border border-[#D7EDF4] bg-white p-4 shadow-[0_18px_45px_rgba(76,139,158,.10)]">
-                        <div class="h-44 overflow-hidden rounded-2xl bg-gradient-to-br from-[#A7DCEB] to-[#6EB9CF]">
-                            @if(isset($artikel->gambar) && $artikel->gambar)
-                                <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="{{ $artikel->judul }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-110">
-                            @elseif(isset($artikel->cover) && $artikel->cover)
-                                <img src="{{ asset('storage/' . $artikel->cover) }}" alt="{{ $artikel->judul }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-110">
-                            @else
-                                <div class="flex h-full w-full items-center justify-center text-white">
-                                    <svg class="h-14 w-14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16v14H4V5Z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 9h8M8 13h8M8 17h4"/>
-                                    </svg>
-                                </div>
-                            @endif
-                        </div>
+    {{-- PARTNERSHIP CTA MITRA --}}
+    <section id="mitra" class="relative overflow-hidden bg-[#EEF9FF] px-4 py-20">
+        <div class="absolute inset-0 mh-line-pattern opacity-70"></div>
 
-                        <h3 class="mt-4 line-clamp-2 text-lg font-bold text-[#172033]">
-                            {{ $artikel->judul }}
-                        </h3>
-
-                        <p class="mt-2 line-clamp-3 text-sm leading-7 text-[#6B7D87]">
-                            {{ Str::limit(strip_tags($artikel->konten ?? $artikel->isi ?? ''), 120) }}
+        <div class="relative mh-container">
+            <div class="overflow-hidden rounded-[2.4rem] bg-white shadow-[0_28px_80px_rgba(14,116,144,.14)]">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div class="mh-reveal-left p-8 md:p-12">
+                        <p class="text-sm font-bold uppercase tracking-[0.25em] text-[#159AC8]">Partnership Program</p>
+                        <h2 class="mt-4 text-3xl font-bold leading-tight tracking-tight text-[#172033] md:text-5xl">Bergabung sebagai mitra psikolog.</h2>
+                        <p class="mt-5 max-w-xl text-sm leading-8 text-[#6B7D87] md:text-base">
+                            Psikolog profesional dapat mengajukan kerja sama secara online. Setelah diverifikasi, akun dapat digunakan untuk mengelola layanan konsultasi pasien.
                         </p>
 
-                        <div class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#159AC8]">
-                            Baca
-                            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/>
-                            </svg>
+                        <div class="mt-8 flex flex-wrap gap-4">
+                            <a href="{{ route('psikolog.register') }}" class="mh-btn mh-shine inline-flex items-center justify-center rounded-full bg-[#28AEDA] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_38px_rgba(82,162,186,.30)] hover:bg-[#149DCC]">
+                                Ajukan Mitra
+                            </a>
+
+                            <a href="{{ route('backend.login') }}" class="mh-btn inline-flex items-center justify-center rounded-full bg-[#EEF9FF] px-6 py-3 text-sm font-semibold text-[#159AC8] hover:bg-[#F7FCFE]">
+                                Masuk 
+                            </a>
                         </div>
-                    </a>
-                @endforeach
-            </div>
-        @else
-            <div class="mh-reveal rounded-3xl border border-[#D7EDF4] bg-[#EEF9FF] p-10 text-center">
-                <p class="text-sm font-medium text-[#5F6F7C]">Belum ada artikel yang dipublikasikan.</p>
-            </div>
-        @endif
-    </div>
-</section>
-
-{{-- FOOTER --}}
-<footer class="relative overflow-hidden bg-[#0B2F3D] px-4 pt-16 text-white">
-    <div class="absolute left-[-120px] top-[-120px] h-72 w-72 rounded-full bg-[#28AEDA]/20 blur-3xl"></div>
-    <div class="absolute right-[-120px] bottom-[-120px] h-80 w-80 rounded-full bg-[#41AD01]/10 blur-3xl"></div>
-
-    <div class="relative mh-container">
-        <div class="grid gap-10 lg:grid-cols-12">
-            <div class="lg:col-span-5">
-                <div class="flex items-center gap-4">
-                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-lg">
-                        <img src="{{ asset('assets/images/logo_polos.png') }}"
-                             alt="MindHaven Logo"
-                             class="h-10 w-10 object-contain">
                     </div>
 
-                    <div>
-                        <h3 class="text-2xl font-bold tracking-tight">MindHaven</h3>
-                        <p class="mt-1 text-sm font-medium text-white/70">Digital Mental Care</p>
+                    <div class="mh-reveal-right bg-gradient-to-br from-[#28AEDA] to-[#0477A7] p-8 text-white md:p-12">
+                        <p class="text-sm font-bold uppercase tracking-[0.22em] text-white/72">Benefit Mitra</p>
+                        <h3 class="mt-3 text-2xl font-bold">Fitur untuk psikolog</h3>
+
+                        <div class="mt-7 grid gap-4 sm:grid-cols-2">
+                            <div class="rounded-3xl bg-white/13 p-5 ring-1 ring-white/15 backdrop-blur-md">
+                                <h4 class="font-bold">Kelola Sesi</h4>
+                                <p class="mt-2 text-sm leading-7 text-white/78">Pantau konsultasi pasien dalam tampilan yang rapi.</p>
+                            </div>
+
+                            <div class="rounded-3xl bg-white/13 p-5 ring-1 ring-white/15 backdrop-blur-md">
+                                <h4 class="font-bold">Input Hasil</h4>
+                                <p class="mt-2 text-sm leading-7 text-white/78">Catatan konsultasi tersimpan secara terstruktur.</p>
+                            </div>
+
+                            <div class="rounded-3xl bg-white/13 p-5 ring-1 ring-white/15 backdrop-blur-md">
+                                <h4 class="font-bold">Buat Rujukan</h4>
+                                <p class="mt-2 text-sm leading-7 text-white/78">Rujukan psikiater dapat dibuat saat pasien butuh tindak lanjut.</p>
+                            </div>
+
+                            <div class="rounded-3xl bg-white/13 p-5 ring-1 ring-white/15 backdrop-blur-md">
+                                <h4 class="font-bold">Profil Tampil</h4>
+                                <p class="mt-2 text-sm leading-7 text-white/78">Profil psikolog aktif dapat ditampilkan pada sistem.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <p class="mt-6 max-w-md text-sm leading-8 text-white/70">
-                    Platform konsultasi kesehatan mental digital yang membantu pasien terhubung
-                    dengan psikolog profesional, mengelola hasil konsultasi, dan mendapatkan
-                    rujukan lanjutan secara lebih rapi.
-                </p>
+    {{-- ARTICLE --}}
+    <section id="artikel" class="bg-white px-4 py-20">
+        <div class="mh-container">
+            <div class="mh-reveal mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+                <div>
+                    <p class="text-sm font-bold uppercase tracking-[0.25em] text-[#159AC8]">Education Content</p>
+                    <h2 class="mt-3 text-3xl font-bold tracking-tight text-[#172033] md:text-4xl">Artikel Kesehatan MindHaven</h2>
+                </div>
 
-                <div class="mt-7 flex flex-wrap gap-3">
-                    <a href="{{ route('register') }}"
-                       class="rounded-full bg-[#28AEDA] px-5 py-3 text-sm font-bold text-white shadow-[0_16px_35px_rgba(40,174,218,.25)] transition hover:-translate-y-1 hover:bg-[#159AC8]">
-                        Mulai Konsultasi
+                <div class="max-w-xl md:text-right">
+                    <p class="text-sm leading-7 text-[#6B7D87]">Konten edukasi kesehatan mental untuk membantu pengguna memahami kondisi mental dengan lebih baik.</p>
+                    <a href="{{ route('artikel.index') }}" class="mh-btn mt-4 inline-flex rounded-full bg-[#28AEDA] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_38px_rgba(82,162,186,.25)] hover:bg-[#149DCC]">
+                        Lihat Artikel
                     </a>
-
-                    <a href="{{ route('psikolog.register') }}"
-                       class="rounded-full bg-white/10 px-5 py-3 text-sm font-bold text-white ring-1 ring-white/15 transition hover:-translate-y-1 hover:bg-white/15">
-                        Jadi Mitra
-                    </a>
                 </div>
             </div>
 
-            <div class="lg:col-span-2">
-                <h4 class="text-base font-bold">Navigasi</h4>
-                <div class="mt-5 grid gap-3 text-sm text-white/70">
-                    <a href="#home" class="transition hover:text-white">Home</a>
-                    <a href="#layanan" class="transition hover:text-white">Services</a>
-                    <a href="#fitur" class="transition hover:text-white">Features</a>
-                    <a href="#psikolog" class="transition hover:text-white">Psikolog</a>
+            @if(isset($artikels) && $artikels->count() > 0)
+                <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+                    @foreach($artikels as $artikel)
+                        <a href="{{ route('artikel.show', ['artikel' => $artikel->id_artikel]) }}" class="mh-reveal mh-hover group overflow-hidden rounded-3xl border border-[#D7EDF4] bg-white p-4 shadow-[0_18px_45px_rgba(76,139,158,.10)]">
+                            <div class="h-44 overflow-hidden rounded-2xl bg-gradient-to-br from-[#A7DCEB] to-[#6EB9CF]">
+                                @if(isset($artikel->gambar) && $artikel->gambar)
+                                    <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="{{ $artikel->judul }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-110">
+                                @elif(isset($artikel->cover) && $artikel->cover)
+                                    <img src="{{ asset('storage/' . $artikel->cover) }}" alt="{{ $artikel->judul }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-110">
+                                @else
+                                    <div class="flex h-full w-full items-center justify-center text-white">
+                                        <svg class="h-14 w-14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16v14H4V5Z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 9h8M8 13h8M8 17h4"/>
+                                        </svg>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <h3 class="mt-4 line-clamp-2 text-lg font-bold text-[#172033]">
+                                {{ $artikel->judul }}
+                            </h3>
+
+                            <p class="mt-2 line-clamp-3 text-sm leading-7 text-[#6B7D87]">
+                                {{ Str::limit(strip_tags($artikel->konten ?? $artikel->isi ?? ''), 120) }}
+                            </p>
+
+                            <div class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#159AC8]">
+                                Baca
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/>
+                                </svg>
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
-            </div>
-
-            <div class="lg:col-span-2">
-                <h4 class="text-base font-bold">Layanan</h4>
-                <div class="mt-5 grid gap-3 text-sm text-white/70">
-                    <a href="#layanan" class="transition hover:text-white">Konsultasi</a>
-                    <a href="#fitur" class="transition hover:text-white">Hasil Konsultasi</a>
-                    <a href="#fitur" class="transition hover:text-white">Rujukan</a>
-                    <a href="{{ route('artikel.index') }}" class="transition hover:text-white">Artikel</a>
+            @else
+                <div class="mh-reveal rounded-3xl border border-[#D7EDF4] bg-[#EEF9FF] p-10 text-center">
+                    <p class="text-sm font-medium text-[#5F6F7C]">Belum ada artikel yang dipublikasikan.</p>
                 </div>
-            </div>
+            @endif
+        </div>
+    </section>
 
-            <div class="lg:col-span-3">
-                <h4 class="text-base font-bold">Akses Cepat</h4>
+    {{-- FOOTER --}}
+    <footer class="relative overflow-hidden bg-[#0B2F3D] px-4 pt-16 text-white">
+        <div class="absolute left-[-120px] top-[-120px] h-72 w-72 rounded-full bg-[#28AEDA]/20 blur-3xl"></div>
+        <div class="absolute right-[-120px] bottom-[-120px] h-80 w-80 rounded-full bg-[#41AD01]/10 blur-3xl"></div>
 
-                <div class="mt-5 grid gap-3 text-sm text-white/70">
-                    <a href="{{ route('login') }}" class="transition hover:text-white">Login Pasien</a>
-                    <a href="{{ route('register') }}" class="transition hover:text-white">Daftar Pasien</a>
-                    <a href="{{ route('psikolog.register') }}" class="transition hover:text-white">Daftar Mitra Psikolog</a>
-                    <a href="{{ route('backend.login') }}" class="transition hover:text-white">Login Admin</a>
-                </div>
+        <div class="relative mh-container">
+            <div class="grid gap-10 lg:grid-cols-12">
+                <div class="lg:col-span-5">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-lg">
+                            <img src="{{ asset('assets/images/logo_polos.png') }}"
+                                 alt="MindHaven Logo"
+                                 class="h-10 w-10 object-contain">
+                        </div>
 
-                <div class="mt-6 rounded-3xl bg-white/8 p-5 ring-1 ring-white/10">
-                    <p class="text-sm font-semibold text-white">MindHaven Support</p>
-                    <p class="mt-2 text-xs leading-6 text-white/65">
-                        Sistem dibuat untuk mendukung konsultasi pasien, psikolog, pembayaran,
-                        hasil konsultasi, dan rujukan psikiater.
+                        <div>
+                            <h3 class="text-2xl font-bold tracking-tight">MindHaven</h3>
+                            <p class="mt-1 text-sm font-medium text-white/70">Digital Mental Care</p>
+                        </div>
+                    </div>
+
+                    <p class="mt-6 max-w-md text-sm leading-8 text-white/70">
+                        Platform konsultasi kesehatan mental digital yang membantu pasien terhubung
+                        dengan psikolog profesional, mengelola hasil konsultasi, dan mendapatkan
+                        rujukan lanjutan secara lebih rapi.
                     </p>
+
+                    <div class="mt-7 flex flex-wrap gap-3">
+                        <a href="{{ route('register') }}"
+                           class="rounded-full bg-[#28AEDA] px-5 py-3 text-sm font-bold text-white shadow-[0_16px_35px_rgba(40,174,218,.25)] transition hover:-translate-y-1 hover:bg-[#159AC8]">
+                            Mulai Konsultasi
+                        </a>
+
+                        <a href="{{ route('psikolog.register') }}"
+                           class="rounded-full bg-white/10 px-5 py-3 text-sm font-bold text-white ring-1 ring-white/15 transition hover:-translate-y-1 hover:bg-white/15">
+                            Jadi Mitra
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <h4 class="text-base font-bold">Navigasi</h4>
+                    <div class="mt-5 grid gap-3 text-sm text-white/70">
+                        <a href="#home" class="transition hover:text-white">Home</a>
+                        <a href="#layanan" class="transition hover:text-white">Services</a>
+                        <a href="#fitur" class="transition hover:text-white">Features</a>
+                        <a href="#psikolog" class="transition hover:text-white">Psikolog</a>
+                        <a href="#testimoni" class="transition hover:text-white">Testimoni</a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <h4 class="text-base font-bold">Layanan</h4>
+                    <div class="mt-5 grid gap-3 text-sm text-white/70">
+                        <a href="#layanan" class="transition hover:text-white">Konsultasi</a>
+                        <a href="#fitur" class="transition hover:text-white">Hasil Konsultasi</a>
+                        <a href="#fitur" class="transition hover:text-white">Rujukan</a>
+                        <a href="{{ route('artikel.index') }}" class="transition hover:text-white">Artikel</a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-3">
+                    <h4 class="text-base font-bold">Akses Cepat</h4>
+
+                    <div class="mt-5 grid gap-3 text-sm text-white/70">
+                        <a href="{{ route('login') }}" class="transition hover:text-white">Login Pasien</a>
+                        <a href="{{ route('register') }}" class="transition hover:text-white">Daftar Pasien</a>
+                        <a href="{{ route('psikolog.register') }}" class="transition hover:text-white">Daftar Mitra Psikolog</a>
+                        <a href="{{ route('backend.login') }}" class="transition hover:text-white">Login Admin</a>
+                    </div>
+
+                    <div class="mt-6 rounded-3xl bg-white/8 p-5 ring-1 ring-white/10">
+                        <p class="text-sm font-semibold text-white">MindHaven Support</p>
+                        <p class="mt-2 text-xs leading-6 text-white/65">
+                            Sistem dibuat untuk mendukung konsultasi pasien, psikolog, pembayaran,
+                            hasil konsultasi, dan rujukan psikiater.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 border-t border-white/10 py-6">
+                <div class="flex flex-col justify-between gap-4 text-sm text-white/55 md:flex-row md:items-center">
+                    <p>© {{ date('Y') }} MindHaven. All rights reserved.</p>
+
+                    <div class="flex flex-wrap gap-5">
+                        <a href="#home" class="transition hover:text-white">Privacy</a>
+                        <a href="#home" class="transition hover:text-white">Terms</a>
+                        <a href="#mitra" class="transition hover:text-white">Partnership</a>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="mt-12 border-t border-white/10 py-6">
-            <div class="flex flex-col justify-between gap-4 text-sm text-white/55 md:flex-row md:items-center">
-                <p>© {{ date('Y') }} MindHaven. All rights reserved.</p>
-
-                <div class="flex flex-wrap gap-5">
-                    <a href="#home" class="transition hover:text-white">Privacy</a>
-                    <a href="#home" class="transition hover:text-white">Terms</a>
-                    <a href="#mitra" class="transition hover:text-white">Partnership</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+    </footer>
 </div>
 
 <a href="{{ route('chatbot.index') }}"

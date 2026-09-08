@@ -8,6 +8,7 @@ use App\Models\Konsultasi;
 use App\Models\Pasien;
 use App\Models\Psikolog;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -17,6 +18,7 @@ class HomeController extends Controller
         |--------------------------------------------------------------------------
         | STATISTIK LANDING PAGE
         |--------------------------------------------------------------------------
+        |
         */
 
         $psikologQuery = Psikolog::query();
@@ -37,6 +39,7 @@ class HomeController extends Controller
         |--------------------------------------------------------------------------
         | PREVIEW PSIKOLOG AKTIF & TERVERIFIKASI
         |--------------------------------------------------------------------------
+        |
         */
 
         $psikologsQuery = Psikolog::with('user')
@@ -55,6 +58,7 @@ class HomeController extends Controller
         |--------------------------------------------------------------------------
         | ARTIKEL PUBLIC DARI ADMIN
         |--------------------------------------------------------------------------
+        |
         */
 
         $artikelsQuery = Artikel::with('admin')
@@ -66,12 +70,28 @@ class HomeController extends Controller
 
         $artikels = $artikelsQuery->take(3)->get();
 
+        /*
+        |--------------------------------------------------------------------------
+        | SINKRONISASI TESTIMONI PASIEN SECARA REALTIME
+        |--------------------------------------------------------------------------
+        |
+        */
+        
+        $testimonialsData = [];
+        if (Schema::hasTable('testimonials')) {
+            $testimonialsData = DB::table('testimonials')
+                ->latest()
+                ->take(3)
+                ->get();
+        }
+
         return view('frontend.home', compact(
             'totalPsikolog',
             'totalKonsultasi',
             'totalPasien',
             'psikologs',
-            'artikels'
+            'artikels',
+            'testimonialsData'
         ));
     }
 }

@@ -107,12 +107,16 @@
             </div>
         @endif
 
-        <form action="{{ route('psikolog.register.store') }}"
+        <form id="mhRegistrationForm"
+              action="{{ route('psikolog.register.store') }}"
               method="POST"
               enctype="multipart/form-data"
               class="space-y-5"
               novalidate>
             @csrf
+
+            {{-- INPUT HIDDEN UTK SINKRONISASI MANIPULASI STRING JADWAL KE CONTROLLER --}}
+            <input type="hidden" id="jadwalPraktikHidden" name="jadwal_praktik" value="{{ old('jadwal_praktik') }}">
 
             <div class="rounded-3xl border border-slate-100 bg-white p-5 shadow-sm lg:p-6 mh-reveal">
                 <div class="mb-5 flex items-center gap-3">
@@ -349,115 +353,85 @@
                     </div>
 
                     {{-- JADWAL PRAKTIK --}}
-<div class="md:col-span-2">
+                    <div class="md:col-span-2">
+                        <div class="rounded-[28px] border border-slate-200 bg-slate-50 p-6">
+                            <div class="mb-6">
+                                <h3 class="text-lg font-black text-slate-800">
+                                    Jadwal Praktik Psikolog
+                                </h3>
+                                <p class="mt-2 text-sm font-semibold text-slate-500">
+                                    Pilih hari dan jam praktik yang tersedia untuk pasien melakukan konsultasi.
+                                </p>
+                            </div>
 
-    <div class="rounded-[28px] border border-slate-200 bg-slate-50 p-6">
+                            <div class="mb-6">
+                                <label class="mb-4 block text-sm font-black text-slate-700">
+                                    Hari Praktik
+                                </label>
 
-        <div class="mb-6">
+                                <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+                                    @foreach([
+                                        'Senin',
+                                        'Selasa',
+                                        'Rabu',
+                                        'Kamis',
+                                        'Jumat',
+                                        'Sabtu',
+                                        'Minggu'
+                                    ] as $hari)
+                                        <label class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 cursor-pointer hover:border-[#01588E] transition">
+                                            <input type="checkbox"
+                                                   name="hari_praktik[]"
+                                                   value="{{ $hari }}"
+                                                   class="h-5 w-5 rounded border-slate-300 text-[#01588E] focus:ring-[#01588E]"
+                                                   {{ in_array($hari, old('hari_praktik', [])) ? 'checked' : '' }}>
+                                            <span class="text-sm font-bold text-slate-700">
+                                                {{ $hari }}
+                                            </span>
+                                        </label>
+                                    @endforeach
+                                </div>
 
-            <h3 class="text-lg font-black text-slate-800">
-                Jadwal Praktik Psikolog
-            </h3>
+                                @error('hari_praktik')
+                                    <p class="mt-3 text-sm font-bold text-red-600">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
 
-            <p class="mt-2 text-sm font-semibold text-slate-500">
-                Pilih hari dan jam praktik yang tersedia untuk pasien melakukan konsultasi.
-            </p>
+                            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                                <div>
+                                    <label class="mb-3 block text-sm font-black text-slate-700">
+                                        Jam Mulai
+                                    </label>
+                                    <input type="time"
+                                           name="jam_mulai"
+                                           value="{{ old('jam_mulai') }}"
+                                           class="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-slate-700 focus:border-[#01588E] focus:ring-[#01588E]">
+                                    @error('jam_mulai')
+                                        <p class="mt-3 text-sm font-bold text-red-600">
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
+                                </div>
 
-        </div>
-
-        <div class="mb-6">
-
-            <label class="mb-4 block text-sm font-black text-slate-700">
-                Hari Praktik
-            </label>
-
-            <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-
-                @foreach([
-                    'Senin',
-                    'Selasa',
-                    'Rabu',
-                    'Kamis',
-                    'Jumat',
-                    'Sabtu',
-                    'Minggu'
-                ] as $hari)
-
-                    <label
-                        class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 cursor-pointer hover:border-[#01588E] transition">
-
-                        <input
-                            type="checkbox"
-                            name="hari_praktik[]"
-                            value="{{ $hari }}"
-                            class="h-5 w-5 rounded border-slate-300 text-[#01588E] focus:ring-[#01588E]"
-                            {{ in_array($hari, old('hari_praktik', [])) ? 'checked' : '' }}>
-
-                        <span class="text-sm font-bold text-slate-700">
-                            {{ $hari }}
-                        </span>
-
-                    </label>
-
-                @endforeach
-
-            </div>
-
-            @error('hari_praktik')
-                <p class="mt-3 text-sm font-bold text-red-600">
-                    {{ $message }}
-                </p>
-            @enderror
-
-        </div>
-
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-
-            <div>
-
-                <label class="mb-3 block text-sm font-black text-slate-700">
-                    Jam Mulai
-                </label>
-
-                <input
-                    type="time"
-                    name="jam_mulai"
-                    value="{{ old('jam_mulai') }}"
-                    class="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-slate-700 focus:border-[#01588E] focus:ring-[#01588E]">
-
-                @error('jam_mulai')
-                    <p class="mt-3 text-sm font-bold text-red-600">
-                        {{ $message }}
-                    </p>
-                @enderror
-
-            </div>
-
-            <div>
-
-                <label class="mb-3 block text-sm font-black text-slate-700">
-                    Jam Selesai
-                </label>
-
-                <input
-                    type="time"
-                    name="jam_selesai"
-                    value="{{ old('jam_selesai') }}"
-                    class="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-slate-700 focus:border-[#01588E] focus:ring-[#01588E]">
-
-                @error('jam_selesai')
-                    <p class="mt-3 text-sm font-bold text-red-600">
-                        {{ $message }}
-                    </p>
-                @enderror
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
+                                <div>
+                                    <label class="mb-3 block text-sm font-black text-slate-700">
+                                        Jam Selesai
+                                    </label>
+                                    <input type="time"
+                                           name="jam_selesai"
+                                           value="{{ old('jam_selesai') }}"
+                                           class="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-slate-700 focus:border-[#01588E] focus:ring-[#01588E]">
+                                    @error('jam_selesai')
+                                        <p class="mt-3 text-sm font-bold text-red-600">
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -466,7 +440,6 @@
                     <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#28AEDA]/10 text-sm font-black text-[#28AEDA]">
                         05
                     </div>
-
                     <div>
                         <h2 class="text-base font-black text-slate-950">Foto Profil & CV</h2>
                         <p class="text-xs font-semibold text-slate-400">Upload foto profil dan CV sebagai dokumen pendukung.</p>
@@ -474,19 +447,15 @@
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-
                     <div class="rounded-2xl border border-slate-100 bg-slate-50/70 p-4 {{ $errors->has('foto_profil') ? 'mh-file-card-error' : '' }}">
                         <label class="mb-2 block text-xs font-black text-slate-700">Foto Profil</label>
-
                         <input type="file"
                                name="foto_profil"
                                class="w-full rounded-xl border border-dashed border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-600 outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-[#28AEDA] file:px-4 file:py-2 file:text-xs file:font-black file:text-white hover:bg-slate-50 focus:border-[#28AEDA] focus:ring-4 focus:ring-[#28AEDA]/10 {{ $errors->has('foto_profil') ? 'mh-input-error' : '' }}"
                                accept="image/png,image/jpeg,image/jpg">
-
                         <p class="mt-2 text-xs font-bold leading-5 text-slate-400">
                             Opsional. Gunakan foto profesional dengan format JPG/PNG maksimal 2MB.
                         </p>
-
                         @error('foto_profil')
                             <p class="mh-error-text">{{ $message }}</p>
                         @enderror
@@ -494,27 +463,22 @@
 
                     <div class="rounded-2xl border border-slate-100 bg-slate-50/70 p-4 {{ $errors->has('dokumen_verifikasi') ? 'mh-file-card-error' : '' }}">
                         <label class="mb-2 block text-xs font-black text-slate-700">Upload CV</label>
-
                         <input type="file"
                                name="dokumen_verifikasi"
                                class="w-full rounded-xl border border-dashed border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-600 outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-[#28AEDA] file:px-4 file:py-2 file:text-xs file:font-black file:text-white hover:bg-slate-50 focus:border-[#28AEDA] focus:ring-4 focus:ring-[#28AEDA]/10 {{ $errors->has('dokumen_verifikasi') ? 'mh-input-error' : '' }}"
                                accept=".pdf,image/png,image/jpeg,image/jpg">
-
                         <p class="mt-2 text-xs font-bold leading-5 text-slate-400">
                             Wajib upload CV terbaru. Format PDF/JPG/PNG maksimal 5MB.
                         </p>
-
                         @error('dokumen_verifikasi')
                             <p class="mh-error-text">{{ $message }}</p>
                         @enderror
                     </div>
-
                 </div>
             </div>
 
             <div class="rounded-2xl border border-[#28AEDA]/10 bg-[#F0F7FB] p-5 mh-reveal">
                 <div class="flex items-start gap-3">
-
                     <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-[#28AEDA] shadow-sm">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-width="2"
@@ -528,20 +492,17 @@
                         <h3 class="text-sm font-black text-slate-800">
                             Informasi Pengajuan Mitra
                         </h3>
-
                         <p class="mt-2 text-sm font-semibold leading-7 text-slate-500">
                             Data pengajuan akan masuk ke admin dengan status pending.
                             Jika disetujui, akun psikolog akan aktif dan informasi login
                             dikirim melalui email.
                         </p>
                     </div>
-
                 </div>
             </div>
 
             <div class="sticky bottom-0 z-20 -mx-5 border-t border-slate-200 bg-white/85 px-5 py-4 backdrop-blur-xl lg:-mx-8 lg:px-8">
                 <div class="mx-auto flex max-w-6xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
-
                     <a href="{{ route('home') }}"
                        class="inline-flex items-center justify-center rounded-xl bg-slate-100 px-6 py-3 text-xs font-black text-slate-600 transition hover:bg-slate-200">
                         Kembali
@@ -551,7 +512,6 @@
                             class="inline-flex items-center justify-center rounded-xl bg-[#28AEDA] px-7 py-3 text-xs font-black text-white shadow-[0_16px_40px_rgba(40,174,218,0.24)] transition hover:-translate-y-0.5 hover:bg-[#2198BF]">
                         Kirim Pengajuan
                     </button>
-
                 </div>
             </div>
 
@@ -577,6 +537,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     revealElements.forEach(function(element) {
         revealObserver.observe(element);
+    });
+
+    // SINKRONISASI DATALAYER FORM SUBMIT:
+    // Menangkap array hari praktik pasca user klik submit form untuk otomatis digabungkan ke hidden field 'jadwal_praktik'
+    const form = document.getElementById('mhRegistrationForm');
+    const hiddenJadwalInput = document.getElementById('jadwalPraktikHidden');
+
+    form.addEventListener('submit', function () {
+        const checkedBoxes = document.querySelectorAll('input[name="hari_praktik[]"]:checked');
+        const selectedDays = [];
+        
+        checkedBoxes.forEach(function (box) {
+            selectedDays.push(box.value);
+        });
+
+        if (selectedDays.length > 0) {
+            hiddenJadwalInput.value = selectedDays.join(', ');
+        } else {
+            hiddenJadwalInput.value = '';
+        }
     });
 });
 </script>

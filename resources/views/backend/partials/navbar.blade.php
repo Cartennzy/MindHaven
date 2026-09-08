@@ -31,8 +31,9 @@
             <div class="flex shrink-0 items-center gap-4">
 
                 {{-- NOTIFIKASI --}}
-                <div class="group relative">
+                <div class="group relative" id="adminNotificationGroup">
                     <button type="button"
+                            id="adminNotificationBtn"
                             class="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-100 bg-white text-[#01588E] shadow-sm transition hover:bg-[#01588E] hover:text-white">
 
                         <svg class="h-5 w-5"
@@ -46,7 +47,7 @@
                         </svg>
 
                         @if($adminUnreadCount > 0)
-                            <span class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white ring-2 ring-white">
+                            <span id="adminUnreadBadge" class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white ring-2 ring-white">
                                 {{ $adminUnreadCount > 9 ? '9+' : $adminUnreadCount }}
                             </span>
                         @endif
@@ -66,7 +67,7 @@
                             </div>
 
                             @if($adminUnreadCount > 0)
-                                <span class="rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-600">
+                                <span id="adminUnreadTextLabel" class="rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-600">
                                     {{ $adminUnreadCount }} baru
                                 </span>
                             @endif
@@ -98,7 +99,7 @@
                                                 </p>
 
                                                 @if(!$notification->is_read)
-                                                    <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-red-500"></span>
+                                                    <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-red-500 mh-dot-marker"></span>
                                                 @endif
                                             </div>
 
@@ -152,3 +153,44 @@
     </div>
 
 </header>
+
+{{-- SCRIPT AJAX REALTIME UNTUK MENGHILANGKAN ANGKA NOTIFIKASI SAAT KLIK / HOVER --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const notifGroup = document.getElementById('adminNotificationGroup');
+    let isMarked = false;
+
+    if (notifGroup) {
+        // Memicu aksi hilangnya angka badge saat group menu dropdown notifikasi terbuka/di-hover admin
+        notifGroup.addEventListener('mouseenter', function () {
+            const badge = document.getElementById('adminUnreadBadge');
+            const textLabel = document.getElementById('adminUnreadTextLabel');
+            const dotMarkers = document.querySelectorAll('.mh-dot-marker');
+
+            // Cek jika badge angka merah memang ada di layar dan belum dibersihkan
+            if (badge && !isMarked) {
+                
+                // 1. Secara instan hilangkan elemen angka merah di UI agar aplikasi terasa sangat cepat (Instant Feedback)
+                badge.remove();
+                if (textLabel) textLabel.remove();
+                dotMarkers.forEach(dot => dot.remove());
+                
+                isMarked = true;
+
+                // 2. Kirim request Fetch API ke background server untuk mengupdate status is_read di database laravel
+                // Kita gunakan rute API fallback bawaan Laravel demi kepraktisan sinkronisasi
+                fetch('/api/admin/notifications/read-all', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ user_id: '{{ auth()->id() }}' })
+                })
+                .then(response => response.json())
+                .catch(error => console.log('Notification sync status:', error));
+            }
+        });
+    }
+});
+</script>

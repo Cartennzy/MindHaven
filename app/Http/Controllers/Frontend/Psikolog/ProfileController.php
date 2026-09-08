@@ -31,6 +31,13 @@ class ProfileController extends Controller
             abort(403, 'Akun ini belum terhubung dengan data psikolog.');
         }
 
+        // SINKRONISASI VALIDASI: Jika input jadwal_praktik masuk sebagai string terpisah koma, 
+        // kita ubah sementara menjadi array agar lolos aturan validasi bawaan asli tanpa mengubah logic ke depan.
+        if ($request->has('jadwal_praktik') && is_string($request->jadwal_praktik)) {
+            $arrayJadwal = array_map('trim', explode(',', $request->jadwal_praktik));
+            $request->merge(['jadwal_praktik' => $arrayJadwal]);
+        }
+
         $validated = $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'no_telepon' => 'required|string|max:30',

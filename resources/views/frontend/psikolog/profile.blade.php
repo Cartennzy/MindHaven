@@ -131,6 +131,9 @@
             @csrf
             @method('PUT')
 
+            {{-- SINKRONISASI VALIDASI BACKEND: Mengirim string jadwal asli agar lolos dari rule 'required' --}}
+            <input type="hidden" name="jadwal_praktik" value="{{ old('jadwal_praktik', $psikolog->jadwal_praktik ?? implode(', ', $currentJadwal)) }}">
+
             <div>
                 <div class="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between border-b border-slate-100 pb-5">
                     <div>

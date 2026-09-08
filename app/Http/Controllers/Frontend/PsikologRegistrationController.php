@@ -27,6 +27,14 @@ class PsikologRegistrationController extends Controller
 
     public function store(Request $request)
     {
+        // SINKRONISASI OTOMATIS: Jika request memiliki array 'hari_praktik', kita jadikan string terpisah koma
+        // untuk mengisi field 'jadwal_praktik' secara otomatis agar lolos validasi pendaftaran awal.
+        if ($request->has('hari_praktik') && is_array($request->hari_praktik)) {
+            $request->merge([
+                'jadwal_praktik' => implode(', ', $request->hari_praktik)
+            ]);
+        }
+
         $rules = [
             'name' => 'required|string|max:255',
             'nama_lengkap' => 'required|string|max:255',
@@ -43,9 +51,9 @@ class PsikologRegistrationController extends Controller
             'pendidikan' => 'nullable|string|max:1000',
             'str_psikolog' => 'nullable|string|max:255',
             'sip_psikolog' => 'nullable|string|max:255',
-            'jadwal_praktik' => 'nullable|string|max:255',
+            'jadwal_praktik' => 'required|string|max:255', // DIUBAH KE REQUIRED: Agar teks ringkasan jadwal wajib terisi dari manipulasi array di atas
 
-            'hari_praktik' => 'required|array',
+            'hari_praktik' => 'required|array|min:1',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required',
         ];
@@ -154,8 +162,15 @@ class PsikologRegistrationController extends Controller
             'sip_psikolog.string' => 'Nomor SIP psikolog harus berupa teks.',
             'sip_psikolog.max' => 'Nomor SIP psikolog maksimal 255 karakter.',
 
+            'jadwal_praktik.required' => 'Jadwal praktik ringkasan wajib terisi dari hari praktik.',
             'jadwal_praktik.string' => 'Jadwal praktik harus berupa teks.',
             'jadwal_praktik.max' => 'Jadwal praktik maksimal 255 karakter.',
+
+            'hari_praktik.required' => 'Hari aktif praktik mingguan wajib dipilih.',
+            'hari_praktik.array' => 'Format hari aktif praktik tidak valid.',
+            'hari_praktik.min' => 'Pilih minimal 1 hari aktif praktik.',
+            'jam_mulai.required' => 'Jam mulai praktik wajib ditentukan.',
+            'jam_selesai.required' => 'Jam selesai praktik wajib ditentukan.',
 
             'bio.string' => 'Bio harus berupa teks.',
             'bio.max' => 'Bio maksimal 1000 karakter.',
@@ -270,7 +285,7 @@ class PsikologRegistrationController extends Controller
                     'hari' => $hari,
                     'jam_mulai' => $request->jam_mulai,
                     'jam_selesai' => $request->jam_selesai,
-                    ]);
+                ]);
             }
 
             $admins = User::where('role', 'admin')->get();

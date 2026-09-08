@@ -34,6 +34,7 @@ use App\Http\Controllers\Frontend\Pasien\HasilKonsultasiController as PasienHasi
 use App\Http\Controllers\Frontend\Pasien\RujukanPsikiaterController as PasienRujukanPsikiaterController;
 use App\Http\Controllers\Frontend\Pasien\MeditasiController as PasienMeditasiController;
 use App\Http\Controllers\Frontend\Pasien\SelfAssessmentController;
+use App\Http\Controllers\Frontend\Pasien\TestimonialsController;
 use App\Http\Controllers\Frontend\ArtikelController;
 use App\Http\Controllers\Frontend\PsikologRegistrationController;
 use App\Http\Controllers\Frontend\KonsultasiMessageController;
@@ -146,6 +147,13 @@ Route::middleware(['auth', 'role:pasien'])
         Route::get('/dashboard', [PasienDashboardController::class, 'index'])
             ->name('dashboard');
 
+        // ROUTE TESTIMONIALS PASIEN SUDAH SINKRON DI SINI
+        Route::get('/testimonials', [TestimonialsController::class, 'index'])
+            ->name('testimonials.index');
+
+        Route::post('/testimonials', [TestimonialsController::class, 'store'])
+            ->name('testimonials.store');
+
         Route::get('/profile', [PasienProfileController::class, 'index'])
             ->name('profile.index');
 
@@ -195,7 +203,6 @@ Route::middleware(['auth', 'role:pasien'])
         |--------------------------------------------------------------------------
         | SUB-ROUTE NEW FEATURE: SELF-ASSESSMENT GRATIS
         |--------------------------------------------------------------------------
-        | Seluruh manajemen rute psikometrik mandiri gratis pasien.
         */
         Route::get('/self-assessment', [SelfAssessmentController::class, 'index'])
             ->name('self-assessment.index');
@@ -209,7 +216,6 @@ Route::middleware(['auth', 'role:pasien'])
         Route::get('/self-assessment/hasil/{id_hasil}', [SelfAssessmentController::class, 'result'])
             ->name('self-assessment.result');
 
-        // PERBAIKAN DI SINI: Mengubah pemanggilan nama ekstensi file .php menjadi ::class agar dibaca legal oleh Laravel
         Route::get('/self-assessment/hasil/{id_hasil}/pdf', [SelfAssessmentController::class, 'exportPdf'])
             ->name('self-assessment.pdf');
 
