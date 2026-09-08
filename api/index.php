@@ -27,6 +27,14 @@ if (empty($_ENV['BROADCAST_CONNECTION'])) {
     putenv('BROADCAST_CONNECTION=log');
 }
 
+// Pastikan key Midtrans terbaca oleh putenv
+if (!empty($_ENV['MIDTRANS_SERVER_KEY'])) {
+    putenv('MIDTRANS_SERVER_KEY=' . $_ENV['MIDTRANS_SERVER_KEY']);
+}
+if (!empty($_ENV['MIDTRANS_CLIENT_KEY'])) {
+    putenv('MIDTRANS_CLIENT_KEY=' . $_ENV['MIDTRANS_CLIENT_KEY']);
+}
+
 // Buat folder temporary yang dibutuhkan jika belum ada
 if (!is_dir('/tmp/storage/logs')) {
     mkdir('/tmp/storage/logs', 0755, true);
