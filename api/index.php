@@ -7,7 +7,13 @@ $_ENV['VIEW_COMPILED_PATH'] = '/tmp/views';
 $_ENV['CACHE_STORE'] = 'array';
 $_ENV['SESSION_DRIVER'] = 'cookie';
 
-// Pastikan session lifetime berupa angka integer
+// Pastikan database connection default terisi mysql
+if (empty($_ENV['DB_CONNECTION'])) {
+    $_ENV['DB_CONNECTION'] = 'mysql';
+    putenv('DB_CONNECTION=mysql');
+}
+
+// Pastikan session lifetime berupa integer
 $_ENV['SESSION_LIFETIME'] = 120;
 putenv('SESSION_LIFETIME=120');
 
