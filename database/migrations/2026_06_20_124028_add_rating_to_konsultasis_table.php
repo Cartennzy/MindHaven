@@ -10,6 +10,9 @@ return new class extends Migration
     {
         Schema::table('konsultasis', function (Blueprint $table) {
             $table->integer('skor_rating')->nullable()->after('status');
+        });
+
+        Schema::table('konsultasis', function (Blueprint $table) {
             $table->text('catatan_ulasan')->nullable()->after('skor_rating');
         });
     }
